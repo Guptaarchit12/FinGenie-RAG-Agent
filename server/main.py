@@ -1,8 +1,7 @@
-# app.py
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from query_agent import get_gemini_response # Renamed for clarity
+from query_agent import get_gemini_response
 
 app = FastAPI(
     title="Gemini AI FastAPI",
@@ -12,7 +11,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Frontend URL
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -25,18 +24,16 @@ class QueryRequest(BaseModel):
         allow_population_by_field_name = True
 
 @app.post("/ask", summary="Ask a question", response_description="AI-generated response")
-async def ask_question(query: QueryRequest): # Added async for potential future async operations
+async def ask_question(query: QueryRequest):
     try:
-        response = await get_gemini_response(query.query) # Await the async function
+        response = await get_gemini_response(query.query)
         return {"response": response}
     except ValueError as e:
-        # Catch specific configuration errors
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
         )
     except Exception as e:
-        # Catch general errors from the Gemini API call
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"An error occurred while fetching AI response: {e}"
