@@ -25,7 +25,7 @@ function App() {
       setResponse(data.response);
       setHistory([{ question: query, answer: data.response }, ...history]);
     } catch (err) {
-      setResponse('⚠️ Could not connect to backend.');
+      setResponse('Could not connect to backend.');
     } finally {
       setIsLoading(false);
       setQuery('');
@@ -51,7 +51,7 @@ function App() {
         <div style={styles.spacer}></div>
 
         <h1 style={{ ...styles.heading, color: themeStyles.color }}>
-          💰 FinGenie RAG Agent
+          FinGenie RAG Agent
         </h1>
 
         <div style={styles.toggleContainer}>
@@ -60,7 +60,7 @@ function App() {
           </button>
           {history.length > 0 && (
             <button onClick={clearHistory} style={{ ...styles.toggleButton, backgroundColor: '#ef4444' }}>
-              🗑️ Clear Chats
+               Clear Chats
             </button>
           )}
         </div>
@@ -81,14 +81,14 @@ function App() {
 
       {response && (
         <div style={{ ...styles.responseCard, backgroundColor: darkMode ? '#1f2937' : '#ffffff', color: themeStyles.color }}>
-          <h3>🔍 Answer:</h3>
+          <h3>Answer:</h3>
           <p>{response}</p>
         </div>
       )}
 
       {history.length > 0 && (
         <div style={styles.historySection}>
-          <h3 style={{ color: themeStyles.color }}>📜 Previous Interactions</h3>
+          <h3 style={{ color: themeStyles.color }}>Previous Interactions</h3>
           <ul style={styles.historyList}>
             {history.map((item, idx) => (
               <li key={idx} style={{ ...styles.historyItem, backgroundColor: darkMode ? '#374151' : '#f9fafb', color: themeStyles.color }}>
